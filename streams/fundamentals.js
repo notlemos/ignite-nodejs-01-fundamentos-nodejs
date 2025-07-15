@@ -15,10 +15,10 @@
 
  // Streams -> 
 
-// process.stdin
-// .pipe(process.stdout)
+// process.stdin -> Stream de Leitura
+// .pipe(process.stdout) -> Stream de Escrita
 
-import { Readable } from 'node:stream'
+import { Readable, Writable, Transform } from 'node:stream'
 
 class OneToHundredStream extends Readable {
     index = 1
@@ -38,7 +38,28 @@ class OneToHundredStream extends Readable {
     }
 }
 
+class InverseNumberStream extends Transform{
+    _transform(chunk, encoding, callback) {
+        const transformed = Number(chunk.toString()) * -1
+
+        callback(null,  Buffer.from(String(transformed)))
+              // ERRO              CONVERSÃO
+    }
+}
+
+class MultiplyByTenStream extends  Writable {
+    _write(chunk, encoding, callback) {
+        console.log(Number(chunk.toString()) * 10)
+        callback()
+    }
+}
+
 // Com Streams você consegue trabalhar com os dados sem eles estarem completos.
 
 new OneToHundredStream()
-    .pipe(process.stdout)
+    .pipe(new InverseNumberStream())
+    .pipe(new MultiplyByTenStream())
+
+// Stream De Leitura => só consegue ler dados
+// Stream De Escrita => só consegue escrever dados 
+// Stream de Transformação => Ler dados de um lugar e Escrever dados para outro lugar
