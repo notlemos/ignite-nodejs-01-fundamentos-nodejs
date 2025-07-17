@@ -34,7 +34,18 @@ import { routes } from './routes.js'
 
 // HTTP Status Code
 
+// Query Parameters: URL Stateful => Filtros, Paginação, Não-obrigatórios.
+// Route Parameter: Identificação de Recurso. Sem informações sensiveis.
+// Request Body: Envio de informações de um formulário. (HTTPs)
 
+// http://localhost:3333/users?userId=1&name=Diego -> Query Parameters
+
+// GET http://localhost:3333/users/1 -> GET USER COM ID = 1
+// DELETE http://localhost:3333/users/1 -> DELETE USER COM ID = 1
+
+// POST http://localhost:3333/users -> Cria um usuário sem ter que colocar todas informações na própria URL.
+
+// Edição e Remoção do Usuário.
 
 const server = http.createServer(async(req, res) => {
     const { method, url } = req 
