@@ -57,7 +57,7 @@ const server = http.createServer(async(req, res) => {
 
     if (method == "POST" && url == "/users"){
         const { name, email } = req.body
-        users.push({
+        users.push({    
             id: 1,
             name,
             email, 
