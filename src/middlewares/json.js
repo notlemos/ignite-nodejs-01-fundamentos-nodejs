@@ -1,5 +1,5 @@
 // middleware -> interceptador 
-// uma função que intercepta a requisição e é tratados.
+// uma função que intercepta a requisição e a resposta e os tratam.
 // middlewares sempre recebem req & res.
 
 export async function json(req, res) {
