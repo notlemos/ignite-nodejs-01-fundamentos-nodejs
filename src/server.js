@@ -2,6 +2,7 @@ import http from 'node:http'
 import { json } from './middlewares/json.js'
 import { Database } from './database.js'
 import { routes } from './routes.js'
+import { extractQueryParameters } from './utils/extract-query-parameters.js'
 
 
 // - Criar usuários
@@ -59,10 +60,13 @@ const server = http.createServer(async(req, res) => {
     if (route) {
         const routeParams = req.url.match(route.path)
         
-        req.params = { ...routeParams.groups }
+        //console.log(extractQueryParameters(routeParams.groups.query))
 
-    
+        const { query, ...params } = routeParams.groups
 
+        req.params = params 
+        req.query = query ? extractQueryParameters(query) : {} 
+        
         return route.handler(req, res)
     }
 
